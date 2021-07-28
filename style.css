@@ -33,3 +33,7 @@
     font-size: large;
     text-decoration-line: underline;
 }
+
+body {
+    background-color: cadetblue;
+}

@@ -1,10 +1,7 @@
-let gameOn = true;
 let hTally = 0;
 let cTally = 0;
 
 function startGame() {
-        console.log("game on");
-        console.log(hTally, cTally);
         let buttons = document.getElementById("buttons");
         buttons.innerHTML = "";
         let b1 = document.createElement("button");
@@ -96,7 +93,7 @@ function play(playerSelection, computerSelection) {
             }
             if (computerSelection === "Paper") {
                 let h = document.createElement("h3");
-                h.innerText = ("You win! " + playerSelection + " loses to " + computerSelection);
+                h.innerText = ("You win! " + playerSelection + " beats " + computerSelection);
                 d.appendChild(h);
                 return "win";
             }
@@ -110,7 +107,6 @@ function game(hPlay) {
     s.innerText = "";
 
     let cPlay = computerPlay();
-    console.log(hPlay);
     let result = play(hPlay, cPlay);
         if (result === "win") {
             hTally++;
@@ -125,14 +121,18 @@ function game(hPlay) {
         }
 
     if (cTally > 4 || hTally > 4) {
-        cTally = 0;
-        hTally = 0;
 
         if (cTally > hTally) {
-            
+            console.log("Game ended");
+            s.innerText = ("You lose! Final Score is " + hTally + "-" + cTally);
+        }
+        else if (cTally < hTally) {
+            console.log("Game ended");
+            s.innerText = ("You win! Final Score is " + hTally + "-" + cTally);
         }
 
-
+        cTally = 0;
+        hTally = 0;
     }
 
     else {
