@@ -1,3 +1,35 @@
+let gameOn = true;
+let hTally = 0;
+let cTally = 0;
+
+function startGame() {
+        console.log("game on");
+        console.log(hTally, cTally);
+        let buttons = document.getElementById("buttons");
+        buttons.innerHTML = "";
+        let b1 = document.createElement("button");
+        let b2 = document.createElement("button");
+        let b3 = document.createElement("button");
+        b1.classList += "playerButton";
+        b2.classList += "playerButton";
+        b3.classList += "playerButton";
+        b1.innerText = "ROCK";
+        b2.innerText = "PAPER";
+        b3.innerText = "SCISSORS";
+        b1.addEventListener('click', function() {
+            game("rock");
+        });
+        b2.addEventListener('click', function() {
+            game("paper");
+        });        
+        b3.addEventListener('click', function() {
+            game("scissors");
+        });
+        buttons.appendChild(b1);
+        buttons.appendChild(b2);
+        buttons.appendChild(b3);
+}
+
 function computerPlay() {
     let index = Math.floor(Math.random() * 3) + 1;
     if (index === 1) { return "rock";}
@@ -5,53 +37,67 @@ function computerPlay() {
     if (index === 3) {return "scissors";}
 }
 
-function humanPlay() {
-    let hPlay = window.prompt("Please enter your play: ");
-    hPlay = hPlay.toLowerCase();
-    if (hPlay === "rock" || hPlay === "paper" || hPlay === "scissors") {
-        return hPlay;
-    }
-    else {
-        console.log("Please enter the right play");
-        humanPlay();
-    }
+function capitalizeH(hPlay) {
+    return hPlay.charAt(0).toUpperCase() + hPlay.slice(1);
+}
+
+function capitalizeC(cPlay) {
+    return cPlay.charAt(0).toUpperCase() + cPlay.slice(1);
 }
 
 function play(playerSelection, computerSelection) {
+    let d = document.getElementById("log");
+    d.innerText = "";
+    playerSelection = capitalizeH(playerSelection);
+    computerSelection = capitalizeC(computerSelection);
     if (playerSelection === computerSelection) {
-        console.log("It's a tie! " + playerSelection + " is equal to " + computerSelection);
+        let h = document.createElement("h3");
+        h.innerText = ("It's a tie! " + playerSelection + " is equal to " + computerSelection);
+        d.appendChild(h);
         return "tie";
     }
     else {
-        if (playerSelection === "rock") {
-            if (computerSelection === "paper") {
-                console.log("You lose! " + playerSelection + " loses to " + computerSelection);
+        if (playerSelection === "Rock") {
+            if (computerSelection === "Paper") {
+                let h = document.createElement("h3");
+                h.innerText = ("You lose! " + playerSelection + " loses to " + computerSelection);
+                d.appendChild(h);
                 return "loss";
             }
-            if (computerSelection === "scissors") {
-                console.log("You win! " + playerSelection + " beats " + computerSelection);
+            if (computerSelection === "Scissors") {
+                let h = document.createElement("h3");
+                h.innerText = ("You win! " + playerSelection + " beats " + computerSelection);
+                d.appendChild(h);
                 return "win";
             }
         }
 
-        else if (playerSelection === "paper") {
-            if (computerSelection === "rock") {
-                console.log("You win! " + playerSelection + " beats " + computerSelection);
+        else if (playerSelection === "Paper") {
+            if (computerSelection === "Rock") {
+                let h = document.createElement("h3");
+                h.innerText = ("You win! " + playerSelection + " beats " + computerSelection);
+                d.appendChild(h);
                 return "win";
             }
-            if (computerSelection === "scissors") {
-                console.log("You lose! " + playerSelection + " loses to " + computerSelection);
+            if (computerSelection === "Scissors") {
+                let h = document.createElement("h3");
+                h.innerText = ("You lose! " + playerSelection + " loses to " + computerSelection);
+                d.appendChild(h);
                 return "loss";
             }
         }
         
-        else if (playerSelection === "scissors") {
-            if (computerSelection === "rock") {
-                console.log("You lose! " + playerSelection + " loses to " + computerSelection);
+        else if (playerSelection === "Scissors") {
+            if (computerSelection === "Rock") {
+                let h = document.createElement("h3");
+                h.innerText = ("You lose! " + playerSelection + " loses to " + computerSelection);
+                d.appendChild(h);
                 return "loss";
             }
-            if (computerSelection === "paper") {
-                console.log("You win! " + playerSelection + " loses to " + computerSelection);
+            if (computerSelection === "Paper") {
+                let h = document.createElement("h3");
+                h.innerText = ("You win! " + playerSelection + " loses to " + computerSelection);
+                d.appendChild(h);
                 return "win";
             }
         }
@@ -59,34 +105,39 @@ function play(playerSelection, computerSelection) {
     }
 }
 
-function game() {
-    let i = 1;
-    let hTally = 0;
-    let cTally = 0;
-    while (i < 6) {
+function game(hPlay) {
+    let s = document.getElementById("score");
+    s.innerText = "";
 
-        let hPlay = humanPlay();
-        let cPlay = computerPlay();
-        let result = play(hPlay, cPlay);
-        console.log(result);
+    let cPlay = computerPlay();
+    console.log(hPlay);
+    let result = play(hPlay, cPlay);
         if (result === "win") {
             hTally++;
+            s.innerText = (hTally + "-" + cTally);
         }
         else if (result === "loss") {
             cTally++;
+            s.innerText = (hTally + "-" + cTally);
         }
-        i++;
+        else if (result === "tie") {
+            s.innerText = (hTally + "-" + cTally);
+        }
+
+    if (cTally > 4 || hTally > 4) {
+        cTally = 0;
+        hTally = 0;
+
+        if (cTally > hTally) {
+            
+        }
+
+
     }
 
-    if (hTally > cTally) {
-        console.log("You win! Final score is " + hTally + "-" + cTally);
+    else {
+        startGame();
     }
 
-    if (cTally > hTally) {
-        console.log("You lose! Final score is " + hTally + "-" + cTally);
-    }
-
-    if (cTally === hTally) {
-        console.log("Tie! Final score is " + hTally + "-" + cTally);
-    }
 }
+
